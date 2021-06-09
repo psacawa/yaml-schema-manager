@@ -39,8 +39,9 @@ def main():
     for schema in schemas:
         print(f"Fetching {schema['name']} from {schema['url']}")
         filename = schema_filename(schema["name"])
-        if "fileMatch" in schema:
-            schema_config[f"file://{os.getcwd()}/{filename}"] = schema["fileMatch"]
+        if "fileMatch" not in schema:
+            schema["fileMatch"] = []
+        schema_config[f"file://{os.getcwd()}/{filename}"] = schema["fileMatch"]
         if not args.dry_run:
             req = requests.get(schema["url"])
             if req.status_code == 200:

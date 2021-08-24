@@ -33,7 +33,7 @@ def main():
     pattern = args.pattern
     catalog = json.load(open("./catalog.json", "r"))
     schemas = (
-        jq.compile(f'.schemas[]|select(.name|test("{pattern}"))').input(catalog).all()
+        jq.compile(f'.schemas[]|select(.name|test("{pattern}"; "i"))').input(catalog).all()
     )
     schema_config = {}
     for schema in schemas:
